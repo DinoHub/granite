@@ -311,6 +311,17 @@ class VioDataset {
     std::vector<granite::FrameId> best_t_ns(vio_t_ns.at(best_idx).begin(),
                                            vio_t_ns.at(best_idx).end());
 
+    size_t total_frames = vio_dataset->get_image_timestamps().size();
+    size_t tracked_frames = vio_t_ns.at(best_idx).size();
+    double tracking_percentage = (tracked_frames * 100.0) / total_frames;
+
+    std::cout << "=== Tracking Statistics ===" << std::endl;
+    std::cout << "Total frames: " << total_frames << std::endl;
+    std::cout << "Longest tracking run: " << tracked_frames << std::endl;
+    std::cout << "Tracking percentage: " << tracking_percentage << "%" << std::endl;
+    std::cout << "Number of map sessions: " << vio_t_ns.size() << std::endl;
+    std::cout << "===========================" << std::endl;
+
     if (calib.intrinsics.size() > 1 || use_imu) {
       Eigen::aligned_vector<Eigen::Vector3d> best_t_w_i(
           vio_t_w_i.at(best_idx).begin(), vio_t_w_i.at(best_idx).end());

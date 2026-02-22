@@ -574,11 +574,14 @@ int main(int argc, char** argv) {
   if (t3.joinable()) t3.join();
   // t4.join();
 
+
   if (!result_path.empty()) {
     Sophus::SE3d T_gt_est;
     Sophus::Sim3d sT_gt_est;
     auto errors = granite::alignSVD(gt_frame_t_ns, vio_t_w_i, gt_frame_t_ns,
                                    gt_frame_t_w_i, T_gt_est, sT_gt_est);
+
+    std::cout << "RMSE ATE: " << errors.first << std::endl;
 
     std::ofstream os(result_path);
     os << errors.first << std::endl;
